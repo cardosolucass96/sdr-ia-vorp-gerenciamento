@@ -1,8 +1,8 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_EVOLUTION_API_URL: string;
-  readonly VITE_EVOLUTION_API_KEY: string;
+  readonly EVOLUTION_API_URL: string;
+  readonly EVOLUTION_API_KEY: string;
 }
 
 interface ImportMeta {
