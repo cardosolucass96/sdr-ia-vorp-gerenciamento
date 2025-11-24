@@ -81,26 +81,13 @@ export function InstanceConnection() {
         return;
       }
       
-      if (response.instance.state === 'connecting') {
-        try {
-          const qrResponse = await evolutionApi.connectInstance(instanceName);
-          if (qrResponse.base64) {
-            setQrCode(qrResponse.base64);
-            setStatus('waiting-scan');
-            startPolling();
-          }
-        } catch {
-          setStatus('disconnected');
-        }
-        return;
-      }
-      
+      // Se está em qualquer outro estado (close, connecting, etc), mostra como desconectado
       setStatus('disconnected');
     } catch (error) {
       console.error('Erro ao verificar status:', error);
       setStatus('disconnected');
     }
-  }, [instanceName, startPolling]);
+  }, [instanceName]);
 
   // Gera o QR Code
   const generateQRCode = useCallback(async () => {
