@@ -7,7 +7,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/:instanceName" element={<InstanceConnection />} />
+        <Route path="/conexao/:instanceName" element={<InstanceConnection />} />
       </Routes>
     </BrowserRouter>
   );
