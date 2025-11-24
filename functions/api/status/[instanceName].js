@@ -4,13 +4,21 @@ export async function onRequest(context) {
   const instanceName = url.pathname.split('/').pop();
 
   try {
+    // Tenta ambos os formatos de variáveis de ambiente
+    const apiUrl = env.EVOLUTION_API_URL || env.VITE_EVOLUTION_API_URL;
+    const apiKey = env.EVOLUTION_API_KEY || env.VITE_EVOLUTION_API_KEY;
+    
     // Verifica se as variáveis de ambiente estão definidas
-    if (!env.VITE_EVOLUTION_API_URL || !env.VITE_EVOLUTION_API_KEY) {
+    if (!apiUrl || !apiKey) {
       return new Response(JSON.stringify({ 
         error: 'Environment variables not configured',
         details: {
-          hasUrl: !!env.VITE_EVOLUTION_API_URL,
-          hasKey: !!env.VITE_EVOLUTION_API_KEY
+          hasUrl: !!apiUrl,
+          hasKey: !!apiKey,
+          viteUrl: !!env.VITE_EVOLUTION_API_URL,
+          viteKey: !!env.VITE_EVOLUTION_API_KEY,
+          plainUrl: !!env.EVOLUTION_API_URL,
+          plainKey: !!env.EVOLUTION_API_KEY
         }
       }), {
         status: 500,
@@ -21,11 +29,11 @@ export async function onRequest(context) {
       });
     }
 
-    const apiUrl = `${env.VITE_EVOLUTION_API_URL}/instance/connectionState/${instanceName}`;
+    const fullApiUrl = `${apiUrl}/instance/connectionState/${instanceName}`;
     
-    const response = await fetch(apiUrl, {
+    const response = await fetch(fullApiUrl, {
       headers: {
-        'apikey': env.VITE_EVOLUTION_API_KEY,
+        'apikey': apiKey,
         'Content-Type': 'application/json',
       },
     });
