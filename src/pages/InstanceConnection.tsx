@@ -67,6 +67,15 @@ export function InstanceConnection() {
       setStatus('checking');
       const response = await evolutionApi.checkInstanceStatus(instanceName);
       
+      console.log('API Response:', response); // Debug
+      
+      // Valida se a resposta tem a estrutura esperada
+      if (!response || !response.instance) {
+        console.error('Invalid response structure:', response);
+        setStatus('disconnected');
+        return;
+      }
+      
       if (response.instance.state === 'open') {
         setStatus('connected');
         return;

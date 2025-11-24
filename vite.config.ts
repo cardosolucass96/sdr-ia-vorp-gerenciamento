@@ -21,5 +21,25 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
       "@/functions": path.resolve(__dirname, "./functions"),
     },
-  }
+  },
+  server: {
+    proxy: {
+      '/api/status': {
+        target: process.env.VITE_EVOLUTION_API_URL || 'https://evolution-api.grupovorp.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/status/, '/instance/connectionState'),
+        headers: {
+          'apikey': process.env.VITE_EVOLUTION_API_KEY || '',
+        },
+      },
+      '/api/connect': {
+        target: process.env.VITE_EVOLUTION_API_URL || 'https://evolution-api.grupovorp.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/connect/, '/instance/connect'),
+        headers: {
+          'apikey': process.env.VITE_EVOLUTION_API_KEY || '',
+        },
+      },
+    },
+  },
 })
