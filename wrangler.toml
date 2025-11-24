@@ -1,0 +1,10 @@
+name = "sdr-ia-vorp-gerenciamento"
+compatibility_date = "2025-11-24"
+pages_build_output_dir = "dist"
+
+[vars]
+# Variáveis públicas (acessíveis no front-end durante build)
+
+# As variáveis secretas devem ser configuradas no dashboard do Cloudflare Pages
+# VITE_EVOLUTION_API_URL
+# VITE_EVOLUTION_API_KEY
